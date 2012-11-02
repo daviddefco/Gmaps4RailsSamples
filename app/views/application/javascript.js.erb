@@ -1,0 +1,16 @@
+$("#container").html("<%= escape_javascript( gmaps({:last_map => false}) ) %>");
+Gmaps.map = new Gmaps4RailsGoogle();
+
+Gmaps.load_map = function() {
+    Gmaps.map.map_options.maxZoom = 15;
+    Gmaps.map.initialize();
+    Gmaps.map.create_markers();
+    Gmaps.map.adjustMapToBounds();
+    Gmaps.map.callback();
+};
+
+$.getJSON('/events', function(json){
+	$(".map_container").show();
+	Gmaps.loadMaps();
+	Gmaps.map.addMarkers(json);
+})

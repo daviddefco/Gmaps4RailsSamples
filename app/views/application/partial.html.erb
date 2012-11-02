@@ -1,0 +1,8 @@
+<h2>Map Loading Using an HTML Partial</h2>
+<p>
+	In this example the map is loaded rendering an HTML partial, and using a
+	layout which includes the Javascript dependencies are dinamically loaded
+	using <%%= yield :scripts%> in the layout.
+</p>
+
+<%= render :partial => 'events/event_map', :locals => { :data => @events } %>

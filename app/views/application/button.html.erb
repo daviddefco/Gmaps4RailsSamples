@@ -1,0 +1,41 @@
+<h2>Map Loading Using an AJAX Button</h2>
+<p>
+	In this example the map is loaded when the button is pressed, making
+	an AJAX call to load the data and show the container. Javascript 
+	dependencies are defined in the layout using &lt;script&gt; tags.
+</p>
+
+<!-- create html + load js files but don't create map itself: will be done after ajax call -->
+<%= gmaps({:last_map => false}) %>
+<br/>
+
+<!-- button to trigger ajax call -->
+<button type="button" id="ajax">Load Map</button>
+
+<script type="text/javascript" charset="utf-8">
+$(function() {
+
+//hide the empty container
+$(".map_container").hide();
+
+// Map initialization
+Gmaps.map = new Gmaps4RailsGoogle();
+Gmaps.load_map = function() {
+    Gmaps.map.map_options.maxZoom = 15;
+    Gmaps.map.initialize();
+    Gmaps.map.create_markers();
+    Gmaps.map.adjustMapToBounds();
+    Gmaps.map.callback();
+};
+
+$("#ajax").click(function(){
+
+  $.getJSON('/events', function(json){
+    $(".map_container").show();
+    Gmaps.loadMaps();
+    Gmaps.map.addMarkers(json);
+  })
+  })
+
+});
+</script>
